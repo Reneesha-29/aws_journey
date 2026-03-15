@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Amazon Polly Narrator</title>
+</head>
+
+<body>
+
+<h2>Amazon Polly Text Narrator</h2>
+
+<textarea id="text" rows="5" cols="40"></textarea>
+<br><br>
+
+<button id="speakBtn">Generate Voice</button>
+
+<br><br>
+
+<audio id="audioPlayer" controls></audio>
+
+<script>
+
+document.getElementById("speakBtn").addEventListener("click", speak);
+
+async function speak() {
+
+const text = document.getElementById("text").value;
+
+const response = await fetch("https://ff7ab2heul.execute-api.ap-south-1.amazonaws.com/speak", {
+method: "POST",
+headers: {
+"Content-Type": "application/json"
+},
+body: JSON.stringify({
+text: text
+})
+});
+
+const blob = await response.blob();
+const url = URL.createObjectURL(blob);
+
+document.getElementById("audioPlayer").src = url;
+
+}
+
+</script>
+
+</body>
+
+</html>
